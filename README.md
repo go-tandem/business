@@ -20,11 +20,11 @@ We have removed the bundled calendars as of version 2.0.0, if you need the calen
 
 - Download the calendars you wish to use from [v1.18.0](https://github.com/gocardless/business/tree/b12c186ca6fd4ffdac85175742ff7e4d0a705ef4/lib/business/data)
 - Place them in a suitable directory in your project, typically `lib/calendars`
--  Add this directory path to your instance of `Business::Calendar` using the `load_paths` method.dd the directory to where you placed the yml files before you load the calendar
+-  Add this directory path to your instance of `BusinessDay::Calendar` using the `load_paths` method.dd the directory to where you placed the yml files before you load the calendar
 
 ```ruby
-Business::Calendar.load_paths = ["lib/calendars"] # your_project/lib/calendars/ contains bacs.yml
-Business::Calendar.load("bacs")
+BusinessDay::Calendar.load_paths = ["lib/calendars"] # your_project/lib/calendars/ contains bacs.yml
+BusinessDay::Calendar.load("bacs")
 ```
 
 If you wish to stay on the last version that contained bundled calendars, pin `business` to `v1.18.0`
@@ -53,7 +53,7 @@ gem "business", "~> 2.0"
 Get started with business by creating an instance of the calendar class, that accepts a hash that specifies which days of the week are considered working days, which days are holidays and which are extra working dates.
 
 ```ruby
-calendar = Business::Calendar.new(
+calendar = BusinessDay::Calendar.new(
   working_days: %w( mon tue wed thu fri ),
   holidays: ["01/01/2014", "03/01/2014"]    # array items are either parseable date strings, or real Date objects
   extra_working_dates: [nil], # Makes the calendar to consider a weekend day as a working day.
@@ -92,7 +92,7 @@ extra_working_dates:
   - 9th March 2020 # A Saturday
 ```
 
-Ensure the calendar file is saved to a directory that will hold all your calendars, typically `lib/calendars`, then add this directory to your instance of `Business::Calendar` using the `load_paths` method before you call your calendar.
+Ensure the calendar file is saved to a directory that will hold all your calendars, typically `lib/calendars`, then add this directory to your instance of `BusinessDay::Calendar` using the `load_paths` method before you call your calendar.
 
 `load_paths` also accepts an array of plain Ruby hashes with the format:
 
@@ -103,26 +103,26 @@ Ensure the calendar file is saved to a directory that will hold all your calenda
 #### Example loading both a path and ruby hashes
 
 ```ruby
-Business::Calendar.load_paths = [
+BusinessDay::Calendar.load_paths = [
   "lib/calendars",
   { "foo_calendar" => { "working_days" => ["monday"] } },
   { "bar_calendar" => { "working_days" => ["sunday"] } },
 ]
 ```
 
-Now you can load the calendar by calling the `Business::Calendar.load(calendar_name)`. In order to avoid parsing the calendar file multiple times, there is a `Business::Calendar.load_cached(calendar_name)` method that caches the calendars by name after loading them.
+Now you can load the calendar by calling the `BusinessDay::Calendar.load(calendar_name)`. In order to avoid parsing the calendar file multiple times, there is a `BusinessDay::Calendar.load_cached(calendar_name)` method that caches the calendars by name after loading them.
 
 ```ruby
-calendar = Business::Calendar.load("my_calendar") # lib/calendars/my_calendar.yml
-calendar = Business::Calendar.load("foo_calendar")
+calendar = BusinessDay::Calendar.load("my_calendar") # lib/calendars/my_calendar.yml
+calendar = BusinessDay::Calendar.load("foo_calendar")
 # or
-calendar = Business::Calendar.load_cached("my_calendar")
-calendar = Business::Calendar.load_cached("foo_calendar")
+calendar = BusinessDay::Calendar.load_cached("my_calendar")
+calendar = BusinessDay::Calendar.load_cached("foo_calendar")
 ```
 
 ## Checking for business days
 
-To check whether a given date is a business day (falls on one of the specified working days or working dates, and is not a holiday), use the `business_day?` method on `Business::Calendar`.
+To check whether a given date is a business day (falls on one of the specified working days or working dates, and is not a holiday), use the `business_day?` method on `BusinessDay::Calendar`.
 
 ```ruby
 calendar.business_day?(Date.parse("Monday, 9 June 2014"))
@@ -131,7 +131,7 @@ calendar.business_day?(Date.parse("Sunday, 8 June 2014"))
 # => false
 ```
 
-More specifically you can check if a given `business_day?` is either a `working_day?` or a `holiday?` using methods on `Business::Calendar`.
+More specifically you can check if a given `business_day?` is either a `working_day?` or a `holiday?` using methods on `BusinessDay::Calendar`.
 
 ```ruby
 # Assuming "Monday, 9 June 2014" is a holiday
@@ -191,3 +191,6 @@ Secondly, business_time supports calculations on times as well as dates. For our
 - Bug reports and pull requests are welcome on GitHub at https://github.com/gocardless/business.
 
 GoCardless ♥ open source. If you do too, come [join us](https://gocardless.com/about/jobs).
+
+## In this FORK
+Renamed the Business module to BusinessDay

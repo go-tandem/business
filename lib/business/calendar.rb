@@ -3,7 +3,7 @@
 require "yaml"
 require "date"
 
-module Business
+module BusinessDay
   class Calendar
     VALID_KEYS = %w[holidays working_days extra_working_dates].freeze
 

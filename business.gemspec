@@ -6,8 +6,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "business/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "business"
-  spec.version       = Business::VERSION
+  spec.name          = "business_day"
+  spec.version       = BusinessDay::VERSION
   spec.authors       = ["Harry Marr"]
   spec.email         = ["developers@gocardless.com"]
   spec.summary       = "Date calculations based on business calendars"
